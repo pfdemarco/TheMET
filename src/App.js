@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import paintings from './components/paintings.js';
+import Paintings from './components/Paintings';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <paintings />
+        <Paintings />
         <a
           className="App-link"
           href="https://reactjs.org"
