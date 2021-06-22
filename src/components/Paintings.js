@@ -1,28 +1,55 @@
 import React from 'react';
-
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
 export default class Paintings extends React.Component {
   state = {
-    imgsrc: ""
+    imgsrc: "",
+    posi: 1
   }
 
-  componentDidMount() {
-     axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/154`)//https://collectionapi.metmuseum.org/public/collection/v1/objects/1738
+  // componentDidMount() { 
+  //    axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/` + this.state.posi)//https://collectionapi.metmuseum.org/public/collection/v1/objects/1738
+  //     .then(res => {
+  //       console.clear();
+  //       console.log(res);
+  //       console.log(this.state.posi);
+  //       const imgsrc = res.data;
+  //       console.log(imgsrc);
+  //       this.setState({ imgsrc });
+  //     })
+  // }
+  theMET() {
+    axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/` + this.state.posi)//https://collectionapi.metmuseum.org/public/collection/v1/objects/1738
       .then(res => {
+        console.clear();
         console.log(res);
+        console.log(this.state.posi);
         const imgsrc = res.data;
         console.log(imgsrc);
         this.setState({ imgsrc });
       })
   }
-
+  IncrementItem = () => {
+    this.setState({ posi: this.state.posi + 1 });
+    console.log(this.state.posi);
+    this.theMET();
+  }
+  DecreaseItem = () => {
+    this.setState({ posi: this.state.posi - 1 });
+    console.log(this.state.posi);
+    this.theMET();
+  }
+  
   render() {
     return (
       <div>
         <img src={this.state.imgsrc.primaryImage} alt="met" />
+        <Button variant="contained" color="primary" onClick={this.IncrementItem}>Click+</Button>
+        <Button variant="contained" color="primary" onClick={this.DecreaseItem}>Click-</Button>
       </div>
     )
+    
   }
 }
 
