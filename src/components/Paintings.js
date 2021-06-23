@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 export default class Paintings extends React.Component {
   state = {
     imgsrc: "",
-    posi: 1
+    posi: 1,
+    textFieldVal: 1,
   }
 
   // componentDidMount() { 
@@ -19,12 +22,13 @@ export default class Paintings extends React.Component {
   //       this.setState({ imgsrc });
   //     })
   // }
-  theMET() {
-    axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/` + this.state.posi)//https://collectionapi.metmuseum.org/public/collection/v1/objects/1738
+  theMET() {//maybe send this posi or textfieldval as a parameter
+    axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/` + this.state.textFieldVal)//https://collectionapi.metmuseum.org/public/collection/v1/objects/1738
       .then(res => {
         console.clear();
         console.log(res);
         console.log(this.state.posi);
+        console.log(this.state.textFieldVal);
         const imgsrc = res.data;
         console.log(imgsrc);
         this.setState({ imgsrc });
@@ -32,6 +36,7 @@ export default class Paintings extends React.Component {
   }
   IncrementItem = () => {
     this.setState({ posi: this.state.posi + 1 });
+    
     console.log(this.state.posi);
     this.theMET();
   }
@@ -47,6 +52,7 @@ export default class Paintings extends React.Component {
         <img src={this.state.imgsrc.primaryImage} alt="met" />
         <Button variant="contained" color="primary" onClick={this.IncrementItem}>Click+</Button>
         <Button variant="contained" color="primary" onClick={this.DecreaseItem}>Click-</Button>
+        <TextField onChange={this.state.textFieldVal._change} id="standard-number" label="Number" type="number" InputLabelProps={{shrink: true, }}/>
       </div>
     )
     
